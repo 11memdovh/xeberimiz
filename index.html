@@ -8,7 +8,7 @@
     <script>tailwind.config = { darkMode: 'class' }</script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 transition-colors duration-300 font-sans">
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 transition-colors duration-300 font-sans min-h-screen flex flex-col">
 
     <!-- Top Info Bar -->
     <div class="bg-gray-900 text-white text-xs py-2 px-4 border-b border-gray-800">
@@ -20,7 +20,7 @@
             </div>
             <button id="theme-toggle" class="bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded-full border border-gray-700 flex items-center space-x-1">
                 <i class="fas fa-moon text-yellow-300"></i>
-                <span class="text-[10px]">Gecə Rejimi</span>
+                <span class="text-[10px]">Rejim</span>
             </button>
         </div>
     </div>
@@ -29,114 +29,256 @@
     <div class="bg-red-700 text-white text-xs py-2 px-4 flex items-center">
         <div class="container mx-auto flex items-center">
             <span class="bg-black font-extrabold px-2 py-0.5 rounded mr-3 uppercase tracking-wider shrink-0">CANLI</span>
-            <marquee class="font-medium">Xəbərimiz.az rəqəmsal xəbər portalı istifadəyə verildi! • Ölkədə yeni kiber təhlükəsizlik layihələri icra olunur...</marquee>
+            <marquee class="font-medium">Xəbərimiz.az rəqəmsal portalı istifadəyə verildi! • Ölkədə yeni iqtisadi və texnoloji layihələrin icrasına başlanıldı...</marquee>
         </div>
     </div>
 
-    <!-- Header / Logo -->
-    <header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-40">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <a href="#" class="text-3xl font-black tracking-tight text-red-600">
-                XƏBƏRİMİZ<span class="text-gray-900 dark:text-white">.AZ</span>
-            </a>
-            
-            <nav class="hidden md:flex space-x-6 font-bold text-sm">
-                <a href="#" class="text-red-600">Baş Səhifə</a>
-                <a href="#" class="hover:text-red-600">Gündəm</a>
-                <a href="#" class="hover:text-red-600">İqtisadiyyat</a>
-                <a href="#" class="hover:text-red-600">İdman</a>
-                <a href="#" class="hover:text-red-600">Texno</a>
-            </nav>
+            <div class="flex items-center space-x-3">
+                <button id="open-sidebar" class="text-gray-700 dark:text-gray-200 text-xl focus:outline-none p-1 hover:text-red-600 transition">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <a href="#" class="text-2xl sm:text-3xl font-black tracking-tight text-red-600">
+                    XƏBƏRİMİZ<span class="text-gray-900 dark:text-white">.AZ</span>
+                </a>
+            </div>
 
             <div class="relative hidden sm:block">
-                <input type="text" placeholder="Xəbər axtar..." class="bg-gray-100 dark:bg-gray-700 text-xs rounded-full pl-3 pr-8 py-1.5 focus:outline-none">
+                <input type="text" placeholder="Xəbər axtar..." class="bg-gray-100 dark:bg-gray-700 text-xs rounded-full pl-3 pr-8 py-1.5 focus:outline-none border border-gray-200 dark:border-gray-600">
                 <i class="fas fa-search absolute right-2.5 top-2 text-gray-400 text-xs"></i>
             </div>
         </div>
     </header>
 
-    <!-- Content -->
-    <main class="container mx-auto px-4 py-6 max-w-6xl">
-        
-        <!-- Big Article -->
-        <article class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg mb-10 border dark:border-gray-700">
-            <img src="https://picsum.photos/900/450?random=30" class="w-full h-80 md:h-[400px] object-cover">
-            <div class="p-6 md:p-8">
-                <div class="flex items-center space-x-3 text-xs mb-3">
-                    <span class="bg-red-600 text-white font-bold px-3 py-1 rounded-full uppercase">Texnologiya</span>
-                    <span class="text-gray-400"><i class="far fa-clock mr-1"></i> 15 Avqust 2026</span>
-                </div>
-                <h1 class="text-2xl md:text-3xl font-extrabold leading-snug mb-4">
-                    Ölkədə Müasir Rəqəmsal Kiber Təhlükəsizlik Mərkəzi Açıldı
-                </h1>
-                <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-4">
-                    Bu gün ölkədə rəqəmsal infrastrukturun təhlükəsizliyini təmin etmək və kiber hücumların qarşısını operativ almaq məqsədilə yeni Müasir Kiber Təhlükəsizlik Mərkəzinin rəsmi açılışı baş tutub.
-                </p>
+    <!-- Sidebar Overlay & Menu -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-50 hidden opacity-0 transition-opacity duration-300"></div>
+    <aside id="sidebar" class="fixed top-0 left-0 h-full w-72 bg-white dark:bg-gray-800 shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 flex flex-col justify-between">
+        <div class="p-5">
+            <div class="flex justify-between items-center mb-6 pb-3 border-b dark:border-gray-700">
+                <span class="font-bold text-lg text-red-600">Menyu</span>
+                <button id="close-sidebar" class="text-gray-500 hover:text-gray-800 dark:hover:text-white text-lg">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
-        </article>
 
-        <!-- Grid Articles -->
-        <h2 class="font-bold text-xl mb-4 border-l-4 border-red-600 pl-3">Son Əlavə Olunanlar</h2>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-            
-            <article class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow p-4 border dark:border-gray-700">
-                <img src="https://picsum.photos/600/300?random=31" class="w-full h-44 object-cover rounded-lg mb-3">
-                <span class="text-[10px] text-blue-500 font-bold uppercase">İdman</span>
-                <h3 class="font-bold text-lg mt-1 mb-2">Avropa Kuboklarında Həlledici Oyunlar Başlayır</h3>
-                <p class="text-xs text-gray-500 dark:text-gray-400">Futbol üzrə Avropa yarışlarında mübarizə aparan komandamız həlledici oyuna hazırlaşır.</p>
+            <!-- Profile & Auth Section -->
+            <div class="flex flex-col items-center bg-gray-50 dark:bg-gray-700/50 p-4 rounded-xl mb-6">
+                <div class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center text-2xl mb-2 font-bold border-2 border-red-600">
+                    <i class="fas fa-user"></i>
+                </div>
+                <span class="text-sm font-semibold">Qonaq İstifadəçi</span>
+                <div class="flex space-x-2 mt-3 w-full">
+                    <button class="flex-1 bg-red-600 hover:bg-red-700 text-white text-xs py-2 rounded-lg font-bold transition">Giriş</button>
+                    <button class="flex-1 border border-red-600 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-gray-700 text-xs py-2 rounded-lg font-bold transition">Qeydiyyat</button>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="space-y-3 font-medium text-sm">
+                <a href="#" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                    <i class="fas fa-home text-red-600 w-5"></i><span>Baş Səhifə</span>
+                </a>
+                <button id="open-about" class="w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition text-left">
+                    <i class="fas fa-info-circle text-red-600 w-5"></i><span>Haqqımızda</span>
+                </button>
+                <a href="https://www.instagram.com/11mamedovh?igsh=MWdqaWMwNG15NTY4NA==&igsi=MWdqaWMwNG15NTY4NA==" target="_blank" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition text-pink-600 font-semibold">
+                    <i class="fab fa-instagram text-lg w-5"></i><span>Adminlə Əlaqə</span>
+                </a>
+            </nav>
+        </div>
+
+        <div class="p-4 border-t dark:border-gray-700 text-center text-xs text-gray-500">
+            &copy; 2026 XƏBƏRİMİZ.AZ
+        </div>
+    </aside>
+
+    <!-- Modal: About Section -->
+    <div id="about-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 max-w-md w-full rounded-2xl p-6 shadow-2xl relative">
+            <button id="close-about" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-white">
+                <i class="fas fa-times text-lg"></i>
+            </button>
+            <h3 class="text-xl font-bold mb-3 text-red-600 border-b pb-2 dark:border-gray-700">Haqqımızda</h3>
+            <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+                <strong>Xəbərimiz.az</strong> — Azərbaycanın ən son, bitərəf və operativ xəbərlərini oxuculara təqdim edən rəqəmsal xəbər portalıdır. Məqsədimiz ölkədə baş verən ən vacib hadisələri dürüstlüklə işıqlandırmaqdır.
+            </p>
+            <h4 class="text-sm font-bold text-gray-800 dark:text-gray-100 mb-1">Portalın Qurucusu</h4>
+            <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                Portal <strong>Musa Məmmədli</strong> tərəfindən təsis edilmişdir. Musa Məmmədli rəqəmsal media və müasir veb-texnologiyaların inkişafı istiqamətində layihələr həyata keçirir.
+            </p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-6 max-w-6xl flex-grow">
+        <h2 class="font-extrabold text-2xl mb-6 border-l-4 border-red-600 pl-3">Azərbaycanda Günün Ən Vacib Xəbərləri</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- Xəbər 1 -->
+            <article class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md flex flex-col justify-between border dark:border-gray-700">
+                <div>
+                    <img src="https://picsum.photos/600/350?random=101" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <span class="text-[10px] bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-400 font-extrabold px-2.5 py-1 rounded-full uppercase">Kiber Təhlükəsizlik</span>
+                        <h3 class="font-bold text-base mt-2 mb-2 leading-snug">Bakıda Yeni Milli Kiber Təhlükəsizlik Mərkəzinin Açılışı Olub</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Ölkənin rəqəmsal infrastrukturunu qorumaq məqsədilə ən son texnologiyalarla təchiz olunmuş yeni mərkəz fəaliyyətə başladı.</p>
+                    </div>
+                </div>
+                <div class="px-4 pb-4 text-[10px] text-gray-400 border-t border-gray-100 dark:border-gray-700 pt-2 flex justify-between">
+                    <span>Bakı • 15 Avqust 2026</span>
+                    <span><i class="far fa-eye mr-1"></i> 1.2k</span>
+                </div>
             </article>
 
-            <article class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow p-4 border dark:border-gray-700">
-                <img src="https://picsum.photos/600/300?random=32" class="w-full h-44 object-cover rounded-lg mb-3">
-                <span class="text-[10px] text-green-500 font-bold uppercase">Avto</span>
-                <h3 class="font-bold text-lg mt-1 mb-2">Yeni Nəsil Elektrik Avtomobilləri Təqdim Edildi</h3>
-                <p class="text-xs text-gray-500 dark:text-gray-400">Mühəndislər tək şarjla 1000 km yol qət edən yeni batareya texnologiyası təqdim ediblər.</p>
+            <!-- Xəbər 2 -->
+            <article class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md flex flex-col justify-between border dark:border-gray-700">
+                <div>
+                    <img src="https://picsum.photos/600/350?random=102" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <span class="text-[10px] bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 font-extrabold px-2.5 py-1 rounded-full uppercase">İqtisadiyyat</span>
+                        <h3 class="font-bold text-base mt-2 mb-2 leading-snug">Azərbaycanda Rəqəmsal Valyuta və Bank İnfrastrukturu Genişləndirilir</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Mərkəzi Bank nağdsız ödənişlərin həcmini artırmaq üçün yeni rəqəmsal finans platformasını istifadəyə verdi.</p>
+                    </div>
+                </div>
+                <div class="px-4 pb-4 text-[10px] text-gray-400 border-t border-gray-100 dark:border-gray-700 pt-2 flex justify-between">
+                    <span>İqtisadiyyat • 15 Avqust 2026</span>
+                    <span><i class="far fa-eye mr-1"></i> 950</span>
+                </div>
+            </article>
+
+            <!-- Xəbər 3 -->
+            <article class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md flex flex-col justify-between border dark:border-gray-700">
+                <div>
+                    <img src="https://picsum.photos/600/350?random=103" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <span class="text-[10px] bg-green-100 dark:bg-green-900/40 text-green-600 dark:text-green-400 font-extrabold px-2.5 py-1 rounded-full uppercase">İdman</span>
+                        <h3 class="font-bold text-base mt-2 mb-2 leading-snug">Qarabağ FK Avropa Çempionlar Liqası Həlledici Oyununa Çıxır</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Təmsilçimiz cavab matçı öncəsi son hazırlıq məşqlərini Bakı stadionunda tamamlayıb.</p>
+                    </div>
+                </div>
+                <div class="px-4 pb-4 text-[10px] text-gray-400 border-t border-gray-100 dark:border-gray-700 pt-2 flex justify-between">
+                    <span>İdman • 15 Avqust 2026</span>
+                    <span><i class="far fa-eye mr-1"></i> 3.4k</span>
+                </div>
+            </article>
+
+            <!-- Xəbər 4 -->
+            <article class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md flex flex-col justify-between border dark:border-gray-700">
+                <div>
+                    <img src="https://picsum.photos/600/350?random=104" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <span class="text-[10px] bg-purple-100 dark:bg-purple-900/40 text-purple-600 dark:text-purple-400 font-extrabold px-2.5 py-1 rounded-full uppercase">Texnologiya</span>
+                        <h3 class="font-bold text-base mt-2 mb-2 leading-snug">Azərbaycanda İnternet Sürəti Rekord Həddə Çatdı</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Rəqəmsal İnkişaf Nazirliyinin layihəsi çərçivəsində rayonlarda fiber-optik şəbəkə tam yeniləndi.</p>
+                    </div>
+                </div>
+                <div class="px-4 pb-4 text-[10px] text-gray-400 border-t border-gray-100 dark:border-gray-700 pt-2 flex justify-between">
+                    <span>Texnoloji • 15 Avqust 2026</span>
+                    <span><i class="far fa-eye mr-1"></i> 1.8k</span>
+                </div>
+            </article>
+
+            <!-- Xəbər 5 -->
+            <article class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md flex flex-col justify-between border dark:border-gray-700">
+                <div>
+                    <img src="https://picsum.photos/600/350?random=105" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <span class="text-[10px] bg-yellow-100 dark:bg-yellow-900/40 text-yellow-600 dark:text-yellow-400 font-extrabold px-2.5 py-1 rounded-full uppercase">Təhsil</span>
+                        <h3 class="font-bold text-base mt-2 mb-2 leading-snug">Tələbələr Üçün Yeni İT İxtisasları üzrə Təqaüd Proqramı Elan Olundu</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Kiber təhlükəsizlik və proqramlaşdırma sahəsində oxuyan gənclər üçün xüsusi dəstək fondu ayrılıb.</p>
+                    </div>
+                </div>
+                <div class="px-4 pb-4 text-[10px] text-gray-400 border-t border-gray-100 dark:border-gray-700 pt-2 flex justify-between">
+                    <span>Təhsil • 15 Avqust 2026</span>
+                    <span><i class="far fa-eye mr-1"></i> 2.1k</span>
+                </div>
+            </article>
+
+            <!-- Xəbər 6 -->
+            <article class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md flex flex-col justify-between border dark:border-gray-700">
+                <div>
+                    <img src="https://picsum.photos/600/350?random=106" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <span class="text-[10px] bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 font-extrabold px-2.5 py-1 rounded-full uppercase">Ekologiya</span>
+                        <h3 class="font-bold text-base mt-2 mb-2 leading-snug">Qarabağ və Şərqi Zəngəzurda Yaşıl Enerji Stansiyaları İstismara Verildi</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Azad edilmiş ərazilərdə günəş və su elektrik stansiyaları şəbəkəyə inteqrasiya olundu.</p>
+                    </div>
+                </div>
+                <div class="px-4 pb-4 text-[10px] text-gray-400 border-t border-gray-100 dark:border-gray-700 pt-2 flex justify-between">
+                    <span>Ekologiya • 15 Avqust 2026</span>
+                    <span><i class="far fa-eye mr-1"></i> 1.5k</span>
+                </div>
+            </article>
+
+            <!-- Xəbər 7 -->
+            <article class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md flex flex-col justify-between border dark:border-gray-700">
+                <div>
+                    <img src="https://picsum.photos/600/350?random=107" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <span class="text-[10px] bg-orange-100 dark:bg-orange-900/40 text-orange-600 dark:text-orange-400 font-extrabold px-2.5 py-1 rounded-full uppercase">Nəqliyyat</span>
+                        <h3 class="font-bold text-base mt-2 mb-2 leading-snug">Bakı Metropolitenində Yeni Nəsil Elektrik Qatarları Xəttə Buraxıldı</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Sərnişin rahatlığını artırmaq üçün kondisionerli və rəqəmsal tablosu olan vaqonlar fəaliyyətə başladı.</p>
+                    </div>
+                </div>
+                <div class="px-4 pb-4 text-[10px] text-gray-400 border-t border-gray-100 dark:border-gray-700 pt-2 flex justify-between">
+                    <span>Nəqliyyat • 15 Avqust 2026</span>
+                    <span><i class="far fa-eye mr-1"></i> 2.8k</span>
+                </div>
+            </article>
+
+            <!-- Xəbər 8 -->
+            <article class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md flex flex-col justify-between border dark:border-gray-700">
+                <div>
+                    <img src="https://picsum.photos/600/350?random=108" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <span class="text-[10px] bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 font-extrabold px-2.5 py-1 rounded-full uppercase">Mədəniyyət</span>
+                        <h3 class="font-bold text-base mt-2 mb-2 leading-snug">Şuşada Beynəlxalq İncəsənət və Musiqi Festivalı Start Götürdü</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Dünyanın bir çox ölkəsindən gələn sənətçilər mədəniyyət paytaxtımızda öz çıxışlarını təqdim edirlər.</p>
+                    </div>
+                </div>
+                <div class="px-4 pb-4 text-[10px] text-gray-400 border-t border-gray-100 dark:border-gray-700 pt-2 flex justify-between">
+                    <span>Mədəniyyət • 15 Avqust 2026</span>
+                    <span><i class="far fa-eye mr-1"></i> 1.1k</span>
+                </div>
+            </article>
+
+            <!-- Xəbər 9 -->
+            <article class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md flex flex-col justify-between border dark:border-gray-700">
+                <div>
+                    <img src="https://picsum.photos/600/350?random=109" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <span class="text-[10px] bg-teal-100 dark:bg-teal-900/40 text-teal-600 dark:text-teal-400 font-extrabold px-2.5 py-1 rounded-full uppercase">Avto</span>
+                        <h3 class="font-bold text-base mt-2 mb-2 leading-snug">Azərbaycanda Elektrikli Avtomobillərin Sayı Keçən İllə Müqayisədə İki Dəfə Artıb</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Ölkə üzrə şarj stansiyalarının şəbəkəsi sürətlə genişləndirilməyə davam edir.</p>
+                    </div>
+                </div>
+                <div class="px-4 pb-4 text-[10px] text-gray-400 border-t border-gray-100 dark:border-gray-700 pt-2 flex justify-between">
+                    <span>Avto • 15 Avqust 2026</span>
+                    <span><i class="far fa-eye mr-1"></i> 1.9k</span>
+                </div>
+            </article>
+
+            <!-- Xəbər 10 -->
+            <article class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md flex flex-col justify-between border dark:border-gray-700">
+                <div>
+                    <img src="https://picsum.photos/600/350?random=110" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <span class="text-[10px] bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-400 font-extrabold px-2.5 py-1 rounded-full uppercase">Səhiyyə</span>
+                        <h3 class="font-bold text-base mt-2 mb-2 leading-snug">Səhiyyədə Elektron Resept və Rəqəmsal Tibb Sistemləri Tam Tətbiq Edildi</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Vətəndaşlar artıq bütün tibbi müayinə nəticələrini vahid rəqəmsal portal üzərindən izləyə bilirlər.</p>
+                    </div>
+                </div>
+                <div class="px-4 pb-4 text-[10px] text-gray-400 border-t border-gray-100 dark:border-gray-700 pt-2 flex justify-between">
+                    <span>Səhiyyə • 15 Avqust 2026</span>
+                    <span><i class="far fa-eye mr-1"></i> 1.4k</span>
+                </div>
             </article>
 
         </div>
-
-        <!-- Comment Box -->
-        <section class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md border dark:border-gray-700">
-            <h3 class="font-bold text-lg mb-4 flex items-center">
-                <i class="far fa-comments text-red-600 mr-2"></i> Oxucu Şərhləri
-            </h3>
-            <div class="flex space-x-3 mb-4">
-                <input type="text" id="comment-input" placeholder="Rəyinizi yazın..." class="w-full bg-gray-100 dark:bg-gray-700 text-xs rounded-xl px-4 py-2.5 focus:outline-none border border-gray-200 dark:border-gray-600">
-                <button onclick="addComment()" class="bg-red-600 text-white text-xs font-bold px-5 py-2.5 rounded-xl hover:bg-red-700 transition">Göndər</button>
-            </div>
-            <div id="comments-list" class="space-y-3 text-xs">
-                <div class="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-xl">
-                    <span class="font-bold text-red-600">Musa M.</span>
-                    <p class="text-gray-600 dark:text-gray-300 mt-1">Dizayn və interfeys çox keyfiyyətli görünür.</p>
-                </div>
-            </div>
-        </section>
-
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-400 py-8 text-xs border-t border-gray-800 mt-12 text-center">
-        <p>&copy; 2026 XƏBƏRİMİZ.AZ • Bütün hüquqlar qorunur.</p>
-    </footer>
-
-    <script>
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        themeToggleBtn.addEventListener('click', () => {
-            document.documentElement.classList.toggle('dark');
-        });
-
-        function addComment() {
-            const input = document.getElementById('comment-input');
-            const list = document.getElementById('comments-list');
-            if (input.value.trim() !== '') {
-                const newComment = document.createElement('div');
-                newComment.className = 'bg-gray-50 dark:bg-gray-700/50 p-3 rounded-xl';
-                newComment.innerHTML = `<span class="font-bold text-red-600">Qonaq</span><p class="text-gray-600 dark:text-gray-300 mt-1">${input.value}</p>`;
-                list.prepend(newComment);
-                input.value = '';
-            }
-        }
-    </script>
-</body>
-</html>
+    <footer class="bg-gray-900 text-gray-400 py-6 text-xs border-t border-gray-800 text-c
