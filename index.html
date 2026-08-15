@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xəbərimiz - Son Dəqiqə Xəbərləri</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <!-- Header -->
+    <header class="bg-red-700 text-white p-4 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold tracking-wide">XƏBƏRİMİZ</h1>
+            <span class="text-xs bg-red-800 px-2 py-1 rounded font-semibold">CANLI</span>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 max-w-4xl">
+        <!-- Manşet Xəbər -->
+        <section class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
+            <img src="https://picsum.photos/800/400" alt="Xəbər şəkli" class="w-full h-48 object-cover">
+            <div class="p-4">
+                <span class="text-xs text-red-600 font-bold uppercase tracking-wider">Son Dəqiqə</span>
+                <h2 class="text-xl font-bold mt-1">Sərmayəsiz və Təhlükəsiz Portal Fəaliyyətə Başladı</h2>
+                <p class="text-gray-600 text-sm mt-2">Jamstack texnologiyası ilə qurulan Xəbərimiz portalı yüksək təhlükəsizlik standartlarına cavab verir...</p>
+                <div class="text-xs text-gray-400 mt-4">15 Avqust 2026 • 10 dəqiqə əvvəl</div>
+            </div>
+        </section>
+
+        <!-- Xəbər Toru -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <article class="bg-white p-4 rounded-lg shadow">
+                <span class="text-xs text-blue-600 font-bold">Texnologiya</span>
+                <h3 class="font-bold text-md mt-1">Mobil Cihazlarla Sayt İdarəetməsi</h3>
+                <p class="text-xs text-gray-500 mt-1">Artıq bütün sistem birbaşa telefondan idarə olunur.</p>
+            </article>
+            <article class="bg-white p-4 rounded-lg shadow">
+                <span class="text-xs text-green-600 font-bold">Təhlükəsizlik</span>
+                <h3 class="font-bold text-md mt-1">Kiber Hücumlar Qarşısında Tam Müdafiə</h3>
+                <p class="text-xs text-gray-500 mt-1">Statik yapılı sistemlər məlumat bazası zəifliklərini sıfıra endirir.</p>
+            </article>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white text-center p-4 mt-8 text-xs">
+        &copy; 2026 Xəbərimiz. Bütün hüquqlar qorunur.
+    </footer>
+</body>
+</html>
