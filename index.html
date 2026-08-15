@@ -1,51 +1,142 @@
 <!DOCTYPE html>
-<html lang="az">
+<html lang="az" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xəbərimiz - Son Dəqiqə Xəbərləri</title>
+    <title>Xəbərimiz.az - Günün Ən Vacib Xəbərləri</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: 'class' }</script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-gray-100 text-gray-800">
-    <!-- Header -->
-    <header class="bg-red-700 text-white p-4 shadow-lg sticky top-0 z-50">
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 transition-colors duration-300 font-sans">
+
+    <!-- Top Info Bar -->
+    <div class="bg-gray-900 text-white text-xs py-2 px-4 border-b border-gray-800">
         <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold tracking-wide">XƏBƏRİMİZ</h1>
-            <span class="text-xs bg-red-800 px-2 py-1 rounded font-semibold">CANLI</span>
+            <div class="flex items-center space-x-4">
+                <span><i class="fas fa-dollar-sign text-green-400"></i> USD: 1.7000</span>
+                <span><i class="fas fa-euro-sign text-blue-400"></i> EUR: 1.8520</span>
+                <span class="hidden sm:inline"><i class="fas fa-sun text-yellow-400"></i> Bakı: +32°C</span>
+            </div>
+            <button id="theme-toggle" class="bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded-full border border-gray-700 flex items-center space-x-1">
+                <i class="fas fa-moon text-yellow-300"></i>
+                <span class="text-[10px]">Gecə Rejimi</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Live Ticker -->
+    <div class="bg-red-700 text-white text-xs py-2 px-4 flex items-center">
+        <div class="container mx-auto flex items-center">
+            <span class="bg-black font-extrabold px-2 py-0.5 rounded mr-3 uppercase tracking-wider shrink-0">CANLI</span>
+            <marquee class="font-medium">Xəbərimiz.az rəqəmsal xəbər portalı istifadəyə verildi! • Ölkədə yeni kiber təhlükəsizlik layihələri icra olunur...</marquee>
+        </div>
+    </div>
+
+    <!-- Header / Logo -->
+    <header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="#" class="text-3xl font-black tracking-tight text-red-600">
+                XƏBƏRİMİZ<span class="text-gray-900 dark:text-white">.AZ</span>
+            </a>
+            
+            <nav class="hidden md:flex space-x-6 font-bold text-sm">
+                <a href="#" class="text-red-600">Baş Səhifə</a>
+                <a href="#" class="hover:text-red-600">Gündəm</a>
+                <a href="#" class="hover:text-red-600">İqtisadiyyat</a>
+                <a href="#" class="hover:text-red-600">İdman</a>
+                <a href="#" class="hover:text-red-600">Texno</a>
+            </nav>
+
+            <div class="relative hidden sm:block">
+                <input type="text" placeholder="Xəbər axtar..." class="bg-gray-100 dark:bg-gray-700 text-xs rounded-full pl-3 pr-8 py-1.5 focus:outline-none">
+                <i class="fas fa-search absolute right-2.5 top-2 text-gray-400 text-xs"></i>
+            </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="container mx-auto p-4 max-w-4xl">
-        <!-- Manşet Xəbər -->
-        <section class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
-            <img src="https://picsum.photos/800/400" alt="Xəbər şəkli" class="w-full h-48 object-cover">
-            <div class="p-4">
-                <span class="text-xs text-red-600 font-bold uppercase tracking-wider">Son Dəqiqə</span>
-                <h2 class="text-xl font-bold mt-1">Sərmayəsiz və Təhlükəsiz Portal Fəaliyyətə Başladı</h2>
-                <p class="text-gray-600 text-sm mt-2">Jamstack texnologiyası ilə qurulan Xəbərimiz portalı yüksək təhlükəsizlik standartlarına cavab verir...</p>
-                <div class="text-xs text-gray-400 mt-4">15 Avqust 2026 • 10 dəqiqə əvvəl</div>
+    <!-- Content -->
+    <main class="container mx-auto px-4 py-6 max-w-6xl">
+        
+        <!-- Big Article -->
+        <article class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg mb-10 border dark:border-gray-700">
+            <img src="https://picsum.photos/900/450?random=30" class="w-full h-80 md:h-[400px] object-cover">
+            <div class="p-6 md:p-8">
+                <div class="flex items-center space-x-3 text-xs mb-3">
+                    <span class="bg-red-600 text-white font-bold px-3 py-1 rounded-full uppercase">Texnologiya</span>
+                    <span class="text-gray-400"><i class="far fa-clock mr-1"></i> 15 Avqust 2026</span>
+                </div>
+                <h1 class="text-2xl md:text-3xl font-extrabold leading-snug mb-4">
+                    Ölkədə Müasir Rəqəmsal Kiber Təhlükəsizlik Mərkəzi Açıldı
+                </h1>
+                <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-4">
+                    Bu gün ölkədə rəqəmsal infrastrukturun təhlükəsizliyini təmin etmək və kiber hücumların qarşısını operativ almaq məqsədilə yeni Müasir Kiber Təhlükəsizlik Mərkəzinin rəsmi açılışı baş tutub.
+                </p>
+            </div>
+        </article>
+
+        <!-- Grid Articles -->
+        <h2 class="font-bold text-xl mb-4 border-l-4 border-red-600 pl-3">Son Əlavə Olunanlar</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+            
+            <article class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow p-4 border dark:border-gray-700">
+                <img src="https://picsum.photos/600/300?random=31" class="w-full h-44 object-cover rounded-lg mb-3">
+                <span class="text-[10px] text-blue-500 font-bold uppercase">İdman</span>
+                <h3 class="font-bold text-lg mt-1 mb-2">Avropa Kuboklarında Həlledici Oyunlar Başlayır</h3>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Futbol üzrə Avropa yarışlarında mübarizə aparan komandamız həlledici oyuna hazırlaşır.</p>
+            </article>
+
+            <article class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow p-4 border dark:border-gray-700">
+                <img src="https://picsum.photos/600/300?random=32" class="w-full h-44 object-cover rounded-lg mb-3">
+                <span class="text-[10px] text-green-500 font-bold uppercase">Avto</span>
+                <h3 class="font-bold text-lg mt-1 mb-2">Yeni Nəsil Elektrik Avtomobilləri Təqdim Edildi</h3>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Mühəndislər tək şarjla 1000 km yol qət edən yeni batareya texnologiyası təqdim ediblər.</p>
+            </article>
+
+        </div>
+
+        <!-- Comment Box -->
+        <section class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md border dark:border-gray-700">
+            <h3 class="font-bold text-lg mb-4 flex items-center">
+                <i class="far fa-comments text-red-600 mr-2"></i> Oxucu Şərhləri
+            </h3>
+            <div class="flex space-x-3 mb-4">
+                <input type="text" id="comment-input" placeholder="Rəyinizi yazın..." class="w-full bg-gray-100 dark:bg-gray-700 text-xs rounded-xl px-4 py-2.5 focus:outline-none border border-gray-200 dark:border-gray-600">
+                <button onclick="addComment()" class="bg-red-600 text-white text-xs font-bold px-5 py-2.5 rounded-xl hover:bg-red-700 transition">Göndər</button>
+            </div>
+            <div id="comments-list" class="space-y-3 text-xs">
+                <div class="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-xl">
+                    <span class="font-bold text-red-600">Musa M.</span>
+                    <p class="text-gray-600 dark:text-gray-300 mt-1">Dizayn və interfeys çox keyfiyyətli görünür.</p>
+                </div>
             </div>
         </section>
 
-        <!-- Xəbər Toru -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <article class="bg-white p-4 rounded-lg shadow">
-                <span class="text-xs text-blue-600 font-bold">Texnologiya</span>
-                <h3 class="font-bold text-md mt-1">Mobil Cihazlarla Sayt İdarəetməsi</h3>
-                <p class="text-xs text-gray-500 mt-1">Artıq bütün sistem birbaşa telefondan idarə olunur.</p>
-            </article>
-            <article class="bg-white p-4 rounded-lg shadow">
-                <span class="text-xs text-green-600 font-bold">Təhlükəsizlik</span>
-                <h3 class="font-bold text-md mt-1">Kiber Hücumlar Qarşısında Tam Müdafiə</h3>
-                <p class="text-xs text-gray-500 mt-1">Statik yapılı sistemlər məlumat bazası zəifliklərini sıfıra endirir.</p>
-            </article>
-        </div>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white text-center p-4 mt-8 text-xs">
-        &copy; 2026 Xəbərimiz. Bütün hüquqlar qorunur.
+    <footer class="bg-gray-900 text-gray-400 py-8 text-xs border-t border-gray-800 mt-12 text-center">
+        <p>&copy; 2026 XƏBƏRİMİZ.AZ • Bütün hüquqlar qorunur.</p>
     </footer>
+
+    <script>
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        themeToggleBtn.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+        });
+
+        function addComment() {
+            const input = document.getElementById('comment-input');
+            const list = document.getElementById('comments-list');
+            if (input.value.trim() !== '') {
+                const newComment = document.createElement('div');
+                newComment.className = 'bg-gray-50 dark:bg-gray-700/50 p-3 rounded-xl';
+                newComment.innerHTML = `<span class="font-bold text-red-600">Qonaq</span><p class="text-gray-600 dark:text-gray-300 mt-1">${input.value}</p>`;
+                list.prepend(newComment);
+                input.value = '';
+            }
+        }
+    </script>
 </body>
 </html>
