@@ -1,223 +1,199 @@
 <!DOCTYPE html>
-<html lang="az" class="light">
+<html lang="az">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xəbərimiz.az - Günün Ən Vacib Xəbərləri</title>
+    <title>Xəbərimiz.az</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>tailwind.config = { darkMode: 'class' }</script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 transition-colors duration-300 font-sans min-h-screen flex flex-col">
+<body class="bg-gray-100 text-gray-800 font-sans min-h-screen flex flex-col">
 
     <!-- Top Bar -->
-    <div class="bg-gray-900 text-white text-xs py-2 px-4 border-b border-gray-800">
-        <div class="container mx-auto flex justify-between items-center">
-            <div class="flex items-center space-x-4">
-                <span><i class="fas fa-dollar-sign text-green-400"></i> USD: 1.7000</span>
-                <span><i class="fas fa-euro-sign text-blue-400"></i> EUR: 1.8520</span>
-                <span class="hidden sm:inline"><i class="fas fa-sun text-yellow-400"></i> Bakı: +32°C</span>
-            </div>
-            <button onclick="document.documentElement.classList.toggle('dark')" class="bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded-full border border-gray-700 flex items-center space-x-1 cursor-pointer">
-                <i class="fas fa-moon text-yellow-300"></i>
-                <span class="text-[10px]">Rejim</span>
-            </button>
+    <div class="bg-gray-900 text-white text-xs py-2 px-4 flex justify-between items-center">
+        <div class="flex space-x-3">
+            <span>USD: 1.7000</span>
+            <span>EUR: 1.8520</span>
         </div>
+        <div>Bakı: +32°C</div>
     </div>
 
     <!-- Header -->
-    <header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-40">
+    <header class="bg-white shadow sticky top-0 z-40">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <button onclick="window.openMenu()" class="text-gray-700 dark:text-gray-200 text-2xl p-1 hover:text-red-600 cursor-pointer">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <a href="#" class="text-2xl sm:text-3xl font-black tracking-tight text-red-600">
-                    XƏBƏRİMİZ<span class="text-gray-900 dark:text-white">.AZ</span>
-                </a>
-            </div>
-            <div class="relative hidden sm:block">
-                <input type="text" placeholder="Xəbər axtar..." class="bg-gray-100 dark:bg-gray-700 text-xs rounded-full pl-3 pr-8 py-1.5 focus:outline-none border dark:border-gray-600">
-                <i class="fas fa-search absolute right-2.5 top-2 text-gray-400 text-xs"></i>
-            </div>
+            <button onclick="toggleMenu()" class="text-2xl text-gray-700 p-1"><i class="fas fa-bars"></i></button>
+            <a href="#" class="text-2xl font-black text-red-600">XƏBƏRİMİZ<span class="text-gray-900">.AZ</span></a>
+            <div class="w-6"></div>
         </div>
     </header>
 
-    <!-- Sidebar Overlay & Menu -->
-    <div id="sidebar-overlay" onclick="window.closeMenu()" class="fixed inset-0 bg-black/50 z-50 hidden opacity-0 transition-opacity duration-300"></div>
-    <aside id="sidebar" class="fixed top-0 left-0 h-full w-72 bg-white dark:bg-gray-800 shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 flex flex-col justify-between">
-        <div class="p-5">
-            <div class="flex justify-between items-center mb-6 pb-3 border-b dark:border-gray-700">
-                <span class="font-bold text-lg text-red-600">Menyu</span>
-                <button onclick="window.closeMenu()" class="text-gray-500 hover:text-gray-800 dark:hover:text-white text-lg cursor-pointer"><i class="fas fa-times"></i></button>
+    <!-- Sidebar Menu -->
+    <div id="overlay" onclick="toggleMenu()" class="fixed inset-0 bg-black/50 z-50 hidden"></div>
+    <aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-white shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 flex flex-col justify-between p-4">
+        <div>
+            <div class="flex justify-between items-center pb-3 border-b mb-4">
+                <span class="font-bold text-red-600">Menyu</span>
+                <button onclick="toggleMenu()" class="text-xl text-gray-500"><i class="fas fa-times"></i></button>
             </div>
-            <div class="flex flex-col items-center bg-gray-50 dark:bg-gray-700/50 p-4 rounded-xl mb-6">
-                <div class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center text-2xl mb-2 font-bold border-2 border-red-600"><i class="fas fa-user"></i></div>
-                <span class="text-sm font-semibold">Qonaq İstifadəçi</span>
-                <div class="flex space-x-2 mt-3 w-full">
-                    <button onclick="window.openLoginModal()" class="flex-1 bg-red-600 text-white text-xs py-2 rounded-lg font-bold cursor-pointer">Giriş</button>
-                    <button onclick="window.openRegisterModal()" class="flex-1 border border-red-600 text-red-600 dark:text-red-400 text-xs py-2 rounded-lg font-bold cursor-pointer">Qeydiyyat</button>
+            <div class="bg-gray-100 p-3 rounded-xl mb-4 text-center">
+                <div class="w-12 h-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-2 text-xl"><i class="fas fa-user"></i></div>
+                <span class="text-xs font-semibold block mb-2">Qonaq</span>
+                <div class="flex gap-2">
+                    <button onclick="openModal('login-modal')" class="flex-1 bg-red-600 text-white text-xs py-1.5 rounded font-bold">Giriş</button>
+                    <button onclick="openModal('reg-modal')" class="flex-1 border border-red-600 text-red-600 text-xs py-1.5 rounded font-bold">Qeydiyyat</button>
                 </div>
             </div>
-            <nav class="space-y-3 font-medium text-sm">
-                <a href="#" onclick="window.closeMenu()" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"><i class="fas fa-home text-red-600 w-5"></i><span>Baş Səhifə</span></a>
-                <button onclick="window.openAboutModal()" class="w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-left cursor-pointer"><i class="fas fa-info-circle text-red-600 w-5"></i><span>Haqqımızda</span></button>
-                <a href="https://www.instagram.com/11mamedovh?igsh=MWdqaWMwNG15NTY4NA==" target="_blank" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-pink-600 font-semibold"><i class="fab fa-instagram text-lg w-5"></i><span>Adminlə Əlaqə</span></a>
+            <nav class="space-y-2 text-sm">
+                <a href="#" onclick="toggleMenu()" class="block p-2 rounded hover:bg-gray-100"><i class="fas fa-home text-red-600 mr-2"></i>Baş Səhifə</a>
+                <button onclick="openModal('about-modal')" class="w-full text-left p-2 rounded hover:bg-gray-100"><i class="fas fa-info-circle text-red-600 mr-2"></i>Haqqımızda</button>
+                <a href="https://www.instagram.com/11mamedovh" target="_blank" class="block p-2 rounded hover:bg-gray-100 text-pink-600"><i class="fab fa-instagram mr-2"></i>Adminlə Əlaqə</a>
             </nav>
         </div>
-        <div class="p-4 border-t dark:border-gray-700 text-center text-xs text-gray-500">&copy; 2026 XƏBƏRİMİZ.AZ</div>
+        <div class="text-center text-xs text-gray-400 border-t pt-2">&copy; 2026 XƏBƏRİMİZ.AZ</div>
     </aside>
 
     <!-- Modals -->
     <div id="login-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-gray-800 max-w-sm w-full rounded-2xl p-6 relative">
-            <button onclick="window.closeLoginModal()" class="absolute top-4 right-4 text-gray-400 cursor-pointer"><i class="fas fa-times text-lg"></i></button>
-            <h3 class="text-xl font-bold mb-4 text-red-600 text-center border-b pb-2 dark:border-gray-700">Hesaba Giriş</h3>
-            <form onsubmit="event.preventDefault(); alert('Giriş edildi!'); window.closeLoginModal();" class="space-y-3">
-                <input type="text" placeholder="İstifadəçi adı / E-poçt" required class="w-full bg-gray-100 dark:bg-gray-700 text-xs rounded-xl px-3 py-2 border dark:border-gray-600">
-                <input type="password" placeholder="Şifrə" required class="w-full bg-gray-100 dark:bg-gray-700 text-xs rounded-xl px-3 py-2 border dark:border-gray-600">
-                <button type="submit" class="w-full bg-red-600 text-white text-xs font-bold py-2.5 rounded-xl cursor-pointer">Daxil Ol</button>
+        <div class="bg-white max-w-xs w-full rounded-xl p-5 relative">
+            <button onclick="closeModal('login-modal')" class="absolute top-3 right-3 text-gray-400"><i class="fas fa-times"></i></button>
+            <h3 class="font-bold text-lg mb-3 text-red-600">Giriş</h3>
+            <form onsubmit="event.preventDefault(); alert('Giriş edildi!'); closeModal('login-modal');" class="space-y-2">
+                <input type="text" placeholder="İstifadəçi adı" required class="w-full bg-gray-100 text-xs p-2 rounded border">
+                <input type="password" placeholder="Şifrə" required class="w-full bg-gray-100 text-xs p-2 rounded border">
+                <button type="submit" class="w-full bg-red-600 text-white text-xs py-2 rounded font-bold">Daxil Ol</button>
             </form>
         </div>
     </div>
 
-    <div id="register-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-gray-800 max-w-sm w-full rounded-2xl p-6 relative">
-            <button onclick="window.closeRegisterModal()" class="absolute top-4 right-4 text-gray-400 cursor-pointer"><i class="fas fa-times text-lg"></i></button>
-            <h3 class="text-xl font-bold mb-4 text-red-600 text-center border-b pb-2 dark:border-gray-700">Qeydiyyat</h3>
-            <form onsubmit="event.preventDefault(); alert('Qeydiyyat tamamlandı!'); window.closeRegisterModal();" class="space-y-3">
-                <input type="text" placeholder="Ad Soyad" required class="w-full bg-gray-100 dark:bg-gray-700 text-xs rounded-xl px-3 py-2 border dark:border-gray-600">
-                <input type="email" placeholder="E-poçt" required class="w-full bg-gray-100 dark:bg-gray-700 text-xs rounded-xl px-3 py-2 border dark:border-gray-600">
-                <input type="password" placeholder="Şifrə" required class="w-full bg-gray-100 dark:bg-gray-700 text-xs rounded-xl px-3 py-2 border dark:border-gray-600">
-                <button type="submit" class="w-full bg-red-600 text-white text-xs font-bold py-2.5 rounded-xl cursor-pointer">Hesab Yarat</button>
+    <div id="reg-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white max-w-xs w-full rounded-xl p-5 relative">
+            <button onclick="closeModal('reg-modal')" class="absolute top-3 right-3 text-gray-400"><i class="fas fa-times"></i></button>
+            <h3 class="font-bold text-lg mb-3 text-red-600">Qeydiyyat</h3>
+            <form onsubmit="event.preventDefault(); alert('Qeydiyyat tamamlandı!'); closeModal('reg-modal');" class="space-y-2">
+                <input type="text" placeholder="Ad Soyad" required class="w-full bg-gray-100 text-xs p-2 rounded border">
+                <input type="email" placeholder="E-poçt" required class="w-full bg-gray-100 text-xs p-2 rounded border">
+                <input type="password" placeholder="Şifrə" required class="w-full bg-gray-100 text-xs p-2 rounded border">
+                <button type="submit" class="w-full bg-red-600 text-white text-xs py-2 rounded font-bold">Qeydiyyatdan Keç</button>
             </form>
         </div>
     </div>
 
     <div id="about-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-gray-800 max-w-md w-full rounded-2xl p-6 relative">
-            <button onclick="window.closeAboutModal()" class="absolute top-4 right-4 text-gray-400 cursor-pointer"><i class="fas fa-times text-lg"></i></button>
-            <h3 class="text-xl font-bold mb-3 text-red-600 border-b pb-2 dark:border-gray-700">Haqqımızda</h3>
-            <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mb-4"><strong>Xəbərimiz.az</strong> — Azərbaycanın ən son və operativ xəbər portalıdır.</p>
-            <h4 class="text-sm font-bold text-gray-800 dark:text-gray-100 mb-1">Qurucu</h4>
-            <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">Portal <strong>Musa Məmmədli</strong> tərəfindən təsis edilmişdir.</p>
+        <div class="bg-white max-w-sm w-full rounded-xl p-5 relative">
+            <button onclick="closeModal('about-modal')" class="absolute top-3 right-3 text-gray-400"><i class="fas fa-times"></i></button>
+            <h3 class="font-bold text-lg mb-2 text-red-600">Haqqımızda</h3>
+            <p class="text-xs text-gray-600 mb-2"><strong>Xəbərimiz.az</strong> — Operativ xəbər portalıdır.</p>
+            <p class="text-xs text-gray-600">Qurucu: <strong>Musa Məmmədli</strong></p>
         </div>
     </div>
 
-    <div id="news-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-white dark:bg-gray-800 max-w-2xl w-full rounded-2xl p-6 relative my-8">
-            <button onclick="window.closeNewsModal()" class="absolute top-4 right-4 bg-gray-200 dark:bg-gray-700 w-8 h-8 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-200 hover:text-red-600 cursor-pointer"><i class="fas fa-times"></i></button>
-            <span id="modal-category" class="text-[10px] bg-red-100 text-red-600 font-extrabold px-3 py-1 rounded-full uppercase">Kategoriya</span>
-            <h2 id="modal-title" class="text-xl font-extrabold mt-3 mb-3">Xəbər Başlığı</h2>
-            <div id="modal-date" class="text-xs text-gray-400 mb-4">Tarix</div>
-            <img id="modal-img" src="" class="w-full h-64 object-cover rounded-xl mb-4">
-            <p id="modal-text" class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed whitespace-pre-line"></p>
+    <div id="news-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white max-w-md w-full rounded-xl p-5 relative max-h-[80vh] overflow-y-auto">
+            <button onclick="closeModal('news-modal')" class="absolute top-3 right-3 text-gray-400"><i class="fas fa-times"></i></button>
+            <span id="n-cat" class="text-[10px] bg-red-100 text-red-600 px-2 py-0.5 rounded font-bold uppercase"></span>
+            <h2 id="n-title" class="font-bold text-base mt-2 mb-2"></h2>
+            <img id="n-img" src="" class="w-full h-40 object-cover rounded mb-2">
+            <p id="n-text" class="text-xs text-gray-600 leading-relaxed"></p>
         </div>
     </div>
 
-    <!-- Main News Grid -->
-    <main class="container mx-auto px-4 py-6 max-w-6xl flex-grow">
-        <h2 class="font-extrabold text-2xl mb-6 border-l-4 border-red-600 pl-3">Azərbaycanda Günün Ən Vacib Xəbərləri</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-6 max-w-5xl flex-grow">
+        <h2 class="font-bold text-xl mb-4 border-l-4 border-red-600 pl-2">Günün Xəbərləri</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
-            <article onclick="window.readNews('Bakıda Yeni Milli Kiber Təhlükəsizlik Mərkəzi Açıldı', 'Kiber Təhlükəsizlik', 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800', '15 Avqust 2026', 'Ölkənin rəqəmsal infrastrukturunu qorumaq üçün müasir mərkəz istifadəyə verildi.')" class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md border dark:border-gray-700 cursor-pointer hover:shadow-xl transition">
-                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <span class="text-[10px] bg-red-100 text-red-600 font-extrabold px-2.5 py-1 rounded-full uppercase">Kiber Təhlükəsizlik</span>
-                    <h3 class="font-bold text-base mt-2 mb-2">Bakıda Yeni Milli Kiber Təhlükəsizlik Mərkəzi Açıldı</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">Rəqəmsal infrastrukturu qorumaq məqsədilə ən son serverlər istifadəyə verildi.</p>
+            <article onclick="showNews('Milli Kiber Təhlükəsizlik Mərkəzi Açıldı', 'Kiber Təhlükəsizlik', 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600', 'Ölkənin rəqəmsal infrastrukturunu qorumaq məqsədilə yeni mərkəz fəaliyyətə başladı.')" class="bg-white rounded-xl overflow-hidden shadow cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600" class="w-full h-40 object-cover">
+                <div class="p-3">
+                    <span class="text-[10px] bg-red-100 text-red-600 px-2 py-0.5 rounded font-bold">Kiber Təhlükəsizlik</span>
+                    <h3 class="font-bold text-sm mt-1 mb-1">Milli Kiber Təhlükəsizlik Mərkəzi Açıldı</h3>
+                    <p class="text-xs text-gray-500">Rəqəmsal infrastruktur üçün yeni sistemlər istifadəyə verildi.</p>
                 </div>
             </article>
 
-            <article onclick="window.readNews('Azərbaycanda Rəqəmsal Bank İnfrastrukturu Genişləndirilir', 'İqtisadiyyat', 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=800', '15 Avqust 2026', 'Nağdsız ödənişlər üçün yeni rəqəmsal platforma fəaliyyətə başladı.')" class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md border dark:border-gray-700 cursor-pointer hover:shadow-xl transition">
-                <img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=600" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <span class="text-[10px] bg-blue-100 text-blue-600 font-extrabold px-2.5 py-1 rounded-full uppercase">İqtisadiyyat</span>
-                    <h3 class="font-bold text-base mt-2 mb-2">Rəqəmsal Bank İnfrastrukturu Genişləndirilir</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">Mərkəzi Bank nağdsız ödənişləri artırmaq üçün yeni sistem qurur.</p>
+            <article onclick="showNews('Rəqəmsal Bank İnfrastrukturu Genişləndirilir', 'İqtisadiyyat', 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=600', 'Mərkəzi Bank nağdsız ödənişlərin həcmini artırmaq üçün yeni platforma qurur.')" class="bg-white rounded-xl overflow-hidden shadow cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=600" class="w-full h-40 object-cover">
+                <div class="p-3">
+                    <span class="text-[10px] bg-blue-100 text-blue-600 px-2 py-0.5 rounded font-bold">İqtisadiyyat</span>
+                    <h3 class="font-bold text-sm mt-1 mb-1">Rəqəmsal Bank İnfrastrukturu Genişləndirilir</h3>
+                    <p class="text-xs text-gray-500">Nağdsız ödənişlər üçün yeni rəqəmsal sistem istifadəyə verildi.</p>
                 </div>
             </article>
 
-            <article onclick="window.readNews('Qarabağ FK Çempionlar Liqası Həlledici Matçına Çıxır', 'İdman', 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=800', '15 Avqust 2026', 'Təmsilçimiz cavab matçı öncəsi son hazırlıqlarını tamamlayıb.')" class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md border dark:border-gray-700 cursor-pointer hover:shadow-xl transition">
-                <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=600" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <span class="text-[10px] bg-green-100 text-green-600 font-extrabold px-2.5 py-1 rounded-full uppercase">İdman</span>
-                    <h3 class="font-bold text-base mt-2 mb-2">Qarabağ FK Həlledici Matça Çıxır</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">Komanda Bakıda keçiriləcək oyun öncəsi son hazırlıq məşqini keçib.</p>
+            <article onclick="showNews('Qarabağ FK Həlledici Matça Çıxır', 'İdman', 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=600', 'Təmsilçimiz cavab oyunu öncəsi Bakıda son hazırlıq məşqini keçirdi.')" class="bg-white rounded-xl overflow-hidden shadow cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=600" class="w-full h-40 object-cover">
+                <div class="p-3">
+                    <span class="text-[10px] bg-green-100 text-green-600 px-2 py-0.5 rounded font-bold">İdman</span>
+                    <h3 class="font-bold text-sm mt-1 mb-1">Qarabağ FK Həlledici Matça Çıxır</h3>
+                    <p class="text-xs text-gray-500">Komanda oyun öncəsi hazırlıqlarını yekunlaşdırdı.</p>
                 </div>
             </article>
 
-            <article onclick="window.readNews('İnternet Sürəti Rekord Həddə Çatdı', 'Texnologiya', 'https://images.unsplash.com/photo-1588702547923-7093a6c3ba33?w=800', '15 Avqust 2026', 'Fiber-optik kabel şəbəkəsi bütün rayonları əhatə etdi.')" class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md border dark:border-gray-700 cursor-pointer hover:shadow-xl transition">
-                <img src="https://images.unsplash.com/photo-1588702547923-7093a6c3ba33?w=600" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <span class="text-[10px] bg-purple-100 text-purple-600 font-extrabold px-2.5 py-1 rounded-full uppercase">Texnologiya</span>
-                    <h3 class="font-bold text-base mt-2 mb-2">İnternet Sürəti Rekord Həddə Çatdı</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">Bütün bölgələrdə genişzolaqlı internet şəbəkəsi quruldu.</p>
+            <article onclick="showNews('İnternet Sürəti Rekord Həddə Çatdı', 'Texnologiya', 'https://images.unsplash.com/photo-1588702547923-7093a6c3ba33?w=600', 'Bütün regionlarda fiber-optik kabel şəbəkəsi yeniləndi.')" class="bg-white rounded-xl overflow-hidden shadow cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1588702547923-7093a6c3ba33?w=600" class="w-full h-40 object-cover">
+                <div class="p-3">
+                    <span class="text-[10px] bg-purple-100 text-purple-600 px-2 py-0.5 rounded font-bold">Texnologiya</span>
+                    <h3 class="font-bold text-sm mt-1 mb-1">İnternet Sürəti Rekord Həddə Çatdı</h3>
+                    <p class="text-xs text-gray-500">Regionlarda genişzolaqlı internet şəbəkəsi tamamlandı.</p>
                 </div>
             </article>
 
-            <article onclick="window.readNews('Tələbələr Üçün İT Təqaüd Proqramı Başladı', 'Təhsil', 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800', '15 Avqust 2026', 'Kiber təhlükəsizlik üzrə təhsil alan tələbələrə xüsusi təqaüd verilir.')" class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md border dark:border-gray-700 cursor-pointer hover:shadow-xl transition">
-                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <span class="text-[10px] bg-yellow-100 text-yellow-600 font-extrabold px-2.5 py-1 rounded-full uppercase">Təhsil</span>
-                    <h3 class="font-bold text-base mt-2 mb-2">Tələbələr Üçün İT Təqaüd Proqramı Başladı</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">Texnologiya sahəsində oxuyan gənclər üçün xüsusi dəstək fondu ayrıldı.</p>
+            <article onclick="showNews('Tələbələr Üçün İT Təqaüd Proqramı', 'Təhsil', 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600', 'Kiber təhlükəsizlik sahəsində oxuyan gənclərə xüsusi dəstək verilir.')" class="bg-white rounded-xl overflow-hidden shadow cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600" class="w-full h-40 object-cover">
+                <div class="p-3">
+                    <span class="text-[10px] bg-yellow-100 text-yellow-600 px-2 py-0.5 rounded font-bold">Təhsil</span>
+                    <h3 class="font-bold text-sm mt-1 mb-1">Tələbələr Üçün İT Təqaüd Proqramı</h3>
+                    <p class="text-xs text-gray-500">İT ixtisaslarında oxuyan gənclərə maliyyə dəstəyi ayrıldı.</p>
                 </div>
             </article>
 
-            <article onclick="window.readNews('Qarabağda Yaşıl Enerji Stansiyaları Açıldı', 'Ekologiya', 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=800', '15 Avqust 2026', 'Günəş və Su stansiyaları dövlət elektik şəbəkəsinə qoşuldu.')" class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md border dark:border-gray-700 cursor-pointer hover:shadow-xl transition">
-                <img src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=600" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <span class="text-[10px] bg-emerald-100 text-emerald-600 font-extrabold px-2.5 py-1 rounded-full uppercase">Ekologiya</span>
-                    <h3 class="font-bold text-base mt-2 mb-2">Qarabağda Yaşıl Enerji Stansiyaları Açıldı</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">Ekoloji təmiz enerji layihələri uğurla istismara verildi.</p>
+            <article onclick="showNews('Qarabağda Yaşıl Enerji Stansiyaları', 'Ekologiya', 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=600', 'Azad edilmiş ərazilərdə günəş stansiyaları şəbəkəyə inteqrasiya olundu.')" class="bg-white rounded-xl overflow-hidden shadow cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=600" class="w-full h-40 object-cover">
+                <div class="p-3">
+                    <span class="text-[10px] bg-emerald-100 text-emerald-600 px-2 py-0.5 rounded font-bold">Ekologiya</span>
+                    <h3 class="font-bold text-sm mt-1 mb-1">Qarabağda Yaşıl Enerji Stansiyaları</h3>
+                    <p class="text-xs text-gray-500">Ekoloji təmiz enerji stansiyaları istifadəyə verildi.</p>
                 </div>
             </article>
 
         </div>
     </main>
 
-    <footer class="bg-gray-900 text-gray-400 py-6 text-xs border-t border-gray-800 text-center mt-auto">
-        <div class="container mx-auto px-4">
-            <p>&copy; 2026 XƏBƏRİMİZ.AZ • Bütün hüquqlar qorunur.</p>
-            <p class="mt-1 text-gray-600">Qurucu: Musa Məmmədli</p>
-        </div>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-4 text-xs text-center border-t border-gray-800">
+        <p>&copy; 2026 XƏBƏRİMİZ.AZ • Qurucu: Musa Məmmədli</p>
     </footer>
 
-    <!-- Scripts -->
+    <!-- JS Logic -->
     <script>
-        window.openMenu = function() {
-            var sidebar = document.getElementById('sidebar');
-            var overlay = document.getElementById('sidebar-overlay');
-            overlay.classList.remove('hidden');
-            setTimeout(function() { overlay.classList.remove('opacity-0'); sidebar.classList.remove('-translate-x-full'); }, 10);
-        };
+        function toggleMenu() {
+            var s = document.getElementById('sidebar');
+            var o = document.getElementById('overlay');
+            if (s.classList.contains('-translate-x-full')) {
+                s.classList.remove('-translate-x-full');
+                o.classList.remove('hidden');
+            } else {
+                s.classList.add('-translate-x-full');
+                o.classList.add('hidden');
+            }
+        }
 
-        window.closeMenu = function() {
-            var sidebar = document.getElementById('sidebar');
-            var overlay = document.getElementById('sidebar-overlay');
-            sidebar.classList.add('-translate-x-full');
-            overlay.classList.add('opacity-0');
-            setTimeout(function() { overlay.classList.add('hidden'); }, 300);
-        };
+        function openModal(id) {
+            toggleMenu();
+            document.getElementById(id).classList.remove('hidden');
+        }
 
-        window.openLoginModal = function() { window.closeMenu(); document.getElementById('login-modal').classList.remove('hidden'); };
-        window.closeLoginModal = function() { document.getElementById('login-modal').classList.add('hidden'); };
-        window.openRegisterModal = function() { window.closeMenu(); document.getElementById('register-modal').classList.remove('hidden'); };
-        window.closeRegisterModal = function() { document.getElementById('register-modal').classList.add('hidden'); };
-        window.openAboutModal = function() { window.closeMenu(); document.getElementById('about-modal').classList.remove('hidden'); };
-        window.closeAboutModal = function() { document.getElementById('about-modal').classList.add('hidden'); };
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
 
-        window.readNews = function(title, category, img, date, text) {
-            document.getElementById('modal-title').innerText = title;
-            document.getElementById('modal-category').innerText = category;
-            document.getElementById('modal-img').src = img;
-            document.getElementById('modal-date').innerText = date;
-            document.getElementById('modal-text').innerText = text;
+        function showNews(title, cat, img, text) {
+            document.getElementById('n-title').innerText = title;
+            document.getElementById('n-cat').innerText = cat;
+            document.getElementById('n-img').src = img;
+            document.getElementById('n-text').innerText = text;
             document.getElementById('news-modal').classList.remove('hidden');
-        };
-
-        window.closeNewsModal = function() { document.getElementById('news-modal').classList.add('hidden'); };
+        }
     </script>
 </body>
 </html>
